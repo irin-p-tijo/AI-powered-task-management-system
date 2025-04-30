@@ -1,5 +1,11 @@
 package interfaces
 
-type TaskDataLayer interface {
-	
+import "zocket-task/pkg/utils/model"
+
+type TaskDL interface {
+	CreateTask(task model.Task) (model.Task, error)
+	CheckTasks(task model.Task) (model.Task, error)
+	UpdateTasks(task model.Task) (model.Task, error)
+	GetTasksByUser(email string) ([]model.Task, error)
+	AssignTask(taskID int, assignee string, assigner string) error
 }

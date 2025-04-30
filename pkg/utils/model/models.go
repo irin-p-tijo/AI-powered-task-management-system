@@ -25,19 +25,28 @@ type UserLoginResponse struct {
 	Phone    string `json:"phone"`
 	Password string `json:"password"`
 }
-type TaskDetails struct {
-	ID             int       `json:"id"`
-	Title          string    `json:"title"`
-	Description    string    `json:"description"`
-	Status         string    `json:"status"`
-	AssignedUserID int       `json:"assigned_user_id"`
-	CreatedAt      time.Time `json:"created_at"`
-	UpdatedAt      time.Time `json:"updated_at"`
+type Task struct {
+	Id          int       `json:"id" gorm:"primaryKey"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	CreatedBy   string    `json:"created_by"`
+	AssignedTo  string    `json:"assigned_to"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
-type Task struct {
-	ID        string `json:"id"`
-	Title     string `json:"title"`
-	Status    string `json:"status"` // pending, in_progress, completed
-	UpdatedBy string `json:"updated_by"`
+type AssignTaskInput struct {
+	TaskID     int    `json:"task_id"`
+	AssignedTo string `json:"assigned_to"`
+}
+type Users struct {
+	ID       int    `json:"id" gorm:"primaryKey"`
+	Name     string `json:"name"`
+	Email    string `json:"email" validate:"email"`
+	Password string `json:"password"`
+	Phone    string `json:"phone"`
+	task     []Task
+}
+type PromptRequest struct {
+	Prompt string `json:"prompt" binding:"required"`
 }

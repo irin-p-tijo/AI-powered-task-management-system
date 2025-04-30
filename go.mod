@@ -9,8 +9,8 @@ require (
 	github.com/go-playground/validator/v10 v10.20.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/wire v0.6.0
-	github.com/gorilla/websocket v1.5.3
 	github.com/jinzhu/copier v0.4.0
+	github.com/sashabaranov/go-openai v1.39.0
 	github.com/spf13/viper v1.20.1
 	golang.org/x/crypto v0.37.0
 	gorm.io/driver/postgres v1.5.11

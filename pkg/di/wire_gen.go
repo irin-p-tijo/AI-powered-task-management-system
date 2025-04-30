@@ -25,6 +25,9 @@ func InitializeAPI(cfg config.Config) (*api.ServerHTTP, error) {
 	authDataLayer := datalayer.NewUserAuthenticationDL(db)
 	authController := controller.NewAuthController(authDataLayer)
 	authHandler := handlers.NewAuthHandler(authController)
-	serverHTTP := api.NewServerHTTP(authHandler)
+	taskDL := datalayer.NewTaskDL(db)
+	taskController := controller.NewTaskController(taskDL, authDataLayer)
+	taskHandler := handlers.NewTaskHandler(taskController, cfg)
+	serverHTTP := api.NewServerHTTP(authHandler, taskHandler)
 	return serverHTTP, nil
 }

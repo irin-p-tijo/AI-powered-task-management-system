@@ -19,6 +19,10 @@ func InitializeAPI(cfg config.Config) (*http.ServerHTTP, error) {
 		controller.NewAuthController,
 		handlers.NewAuthHandler,
 
+		datalayer.NewTaskDL,
+		controller.NewTaskController,
+		handlers.NewTaskHandler,
+
 		http.NewServerHTTP,
 	)
 	return &http.ServerHTTP{}, nil

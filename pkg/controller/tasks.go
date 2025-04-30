@@ -1,39 +1,38 @@
 package controller
 
 import (
-	"encoding/json"
-	"log"
+	"errors"
 	controller "zocket-task/pkg/controller/interfaces"
 	interfaces "zocket-task/pkg/datalayer/interfaces"
 	"zocket-task/pkg/utils/model"
-
-	"github.com/gorilla/websocket"
 )
 
 type TaskController struct {
-	taskDataLayer interfaces.TaskDataLayer
+	taskDataLayer interfaces.TaskDL
+	authDL        interfaces.AuthDataLayer
 }
 
-func NewTaskController(data interfaces.TaskDataLayer) controller.TaskController {
+func NewTaskController(data interfaces.TaskDL, authData interfaces.AuthDataLayer) controller.TaskController {
 	return &TaskController{
 		taskDataLayer: data,
+		authDL:        authData,
 	}
 }
-func (u *TaskController) CreateTask(task model.TaskDetails) (model.Task, error) {
-	return model.Task{}, nil
+func (tc *TaskController) CreateTask(task model.Task) (model.Task, error) {
+	newTask, err := tc.taskDataLayer.CreateTask(task)
+	if err != nil {
+		return model.Task{}, errors.New("Could not create task")
+	}
+	return newTask, nil
 }
-func BroadcastTaskUpdates(broadcast chan model.Task, clients map[*websocket.Conn]bool) {
-	for {
-		task := <-broadcast
-		message, _ := json.Marshal(task)
+func (tc *TaskController) GetTasksByUser(email string) ([]model.Task, error) {
+	tasks, err := tc.taskDataLayer.GetTasksByUser(email)
+	if err != nil {
+		return []model.Task{}, err
+	}
+	return tasks, nil
+}
 
-		for client := range clients {
-			err := client.WriteMessage(websocket.TextMessage, message)
-			if err != nil {
-				log.Printf("WebSocket error: %v", err)
-				client.Close()
-				delete(clients, client)
-			}
-		}
-	}
+func (tc *TaskController) AssignTask(taskID int, assignee string, assigner string) error {
+	return tc.taskDataLayer.AssignTask(taskID, assignee, assigner)
 }

@@ -14,6 +14,7 @@ type ServerHTTP struct {
 
 func NewServerHTTP(
 	authHandler *handlers.AuthHandler,
+	taskHandler *handlers.TaskHandler,
 ) *ServerHTTP {
 
 	router := gin.New()
@@ -22,7 +23,7 @@ func NewServerHTTP(
 
 	/////////////////routes//////////////////////////
 
-	routes.UserRoutes(router.Group("/user"), authHandler)
+	routes.UserRoutes(router.Group("/user"), authHandler,taskHandler)
 	return &ServerHTTP{engine: router}
 }
 

@@ -52,7 +52,7 @@ func (c *UserAuthenticationDL) FindUserByEmail(user model.UserLogin) (model.User
 	var userDetails model.UserLoginResponse
 
 	err := c.DB.Raw(`
-		select * from users where email = ? and blocked = false	`, user.Email).Scan(&userDetails).Error
+		select * from users where email = ?	`, user.Email).Scan(&userDetails).Error
 
 	if err != nil {
 		return model.UserLoginResponse{}, errors.New("error checking user details")
