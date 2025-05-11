@@ -66,7 +66,7 @@ func (t *TaskHandler) TrackTask(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, errRes)
 		return
 	}
-	successRes := response.ClientResponse(http.StatusOK, "the products data is retrived", tasks, nil)
+	successRes := response.ClientResponse(http.StatusOK, "the task data is retrived", tasks, nil)
 	c.JSON(http.StatusOK, successRes)
 }
 
@@ -89,7 +89,7 @@ func (t *TaskHandler) AssignTask(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	successRes := response.ClientResponse(http.StatusOK, "the products data is retrived", nil, nil)
+	successRes := response.ClientResponse(http.StatusOK, "the task data is retrived", nil, nil)
 	c.JSON(http.StatusOK, successRes)
 }
 func (h *TaskHandler) GetTaskSuggestions(c *gin.Context) {

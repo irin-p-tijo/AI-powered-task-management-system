@@ -28,9 +28,11 @@ func (td *TaskDL) CreateTask(task model.Task) (model.Task, error) {
 	}
 	return createdTask, nil
 }
+//tbd
 func (td *TaskDL) CheckTasks(task model.Task) (model.Task, error) {
 	return model.Task{}, nil
 }
+//tbd
 func (td *TaskDL) UpdateTasks(task model.Task) (model.Task, error) {
 	return model.Task{}, nil
 }
